@@ -41,7 +41,7 @@ const Banner = () => {
         <div className='absolute transform -translate-y-1/2 top-60 z-10 text-white bg-gradient-to-r from-[#151515] to-[rgba(21, 21, 21, 0.00)] h-full p-16'>
           <h2 className='text-7xl font-bold w-1/2'>Affordable Price For Car Servicing</h2>
           <p className='w-1/2 py-7'>There are many variations of passages of  available, but the majority have suffered alteration in some form</p>
-          <button className='btn btn-error mr-5'>Discover More</button>
+          <button className='btn btn-error mr-5 text-white'>Discover More</button>
           <button className='btn btn-outline text-white'>Latest Project</button>
         </div>
       </Swiper>
