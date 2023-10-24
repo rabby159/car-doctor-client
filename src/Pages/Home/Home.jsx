@@ -1,3 +1,4 @@
+import Services from "../../Components/Services/Services";
 import Footer from "../../SharedComp/Footer/Footer";
 import Navbar from "../../SharedComp/Navbar/Navbar";
 import About from "./About";
@@ -10,6 +11,7 @@ const Home = () => {
             <Navbar></Navbar>
             <Banner></Banner>
             <About></About>
+            <Services></Services>
             <Footer></Footer>
         </div>
     );
