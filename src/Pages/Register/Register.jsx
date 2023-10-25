@@ -1,13 +1,73 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../../SharedComp/Navbar/Navbar";
+import login from '../../assets/images/login/login.svg'
+import { useContext } from "react";
+import { AuthContext } from "../../Provider/AuthProvider";
+import Swal from "sweetalert2";
 
 const Register = () => {
+
+  const {createUser, handleUpdateProfile} = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleSignUp = event => {
+    event.preventDefault();
+    const form = event.target;
+
+    const name = form.name.value;
+    const imageURL = form.imageURL.value;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    console.log(name, imageURL, email, password);
+    if(password.length < 6){
+      Swal.fire("Invalid!", "Password must should be 6 character", "error");
+      return;
+       
+    }
+
+    if(!/[A-Z]/.test(password)){
+      Swal.fire("Invalid!", "Password must should be a 1 capital latter", "error");
+      return;
+    }
+
+    if(!/[!@#$%^&*()_+{}[\]:;<>,.?~\\-]/.test(password)){
+      Swal.fire("Invalid!", "Password must should be a 1 Special latter", "error");
+      return;
+    }
+
+    createUser(email, password)
+      .then((res) => {
+        handleUpdateProfile(name, imageURL)
+        .then(() => {
+          Swal.fire(
+            'Welcome!',
+            'Successfully complete registration!',
+            'success'
+          );
+          navigate(location?.state ? location.state : '/');
+        })
+      })
+      .catch((err) => {
+        Swal.fire(
+          'Invalid!',
+          'Please provide valid user and password!',
+          'error'
+        );
+      });
+  }
+
+
   return (
     <>
       <Navbar></Navbar>
       <div className="flex justify-center items-center h-[70vh]">
+      <div className="text-center lg:text-left w-1/2">
+            <img src={login} alt="" />
+        </div>
         <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
-          <form className="space-y-6" action="#">
+          <form onSubmit={handleSignUp} className="space-y-6" action="#">
             <h5 className="text-xl font-medium text-gray-900 dark:text-white">
               Register Now!
             </h5>
@@ -31,7 +91,7 @@ const Register = () => {
               <input
                 type="text"
                 name="imageURL"
-                id="name"
+                id="imageURL"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                 placeholder="image url..."
               />
